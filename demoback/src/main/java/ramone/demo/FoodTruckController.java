@@ -58,19 +58,47 @@ public class FoodTruckController {
 
     @RequestMapping("/{ID}")
     public FoodTrucks getTruckByID(@PathVariable Integer ID){
-        return foodTrucks.get(ID);
+        var index = 0;
+        for (FoodTrucks foodTrucks2 : foodTrucks) {
+            
+            if(ID == foodTrucks2.getID())
+            {
+                break;
+            }
+            index++;
+        }
+        return foodTrucks.get(index);
     }
 
     @DeleteMapping("/{ID}")
-    public String deleteTruckByID(@PathVariable Integer ID) {
-        foodTrucks.remove(foodTrucks.get(ID));
-        return "Item Deleted!";
+    public FoodTrucks deleteTruckByID(@PathVariable Integer ID) {
+        var index = 0;
+        for (FoodTrucks foodTrucks2 : foodTrucks) {
+            
+            if(ID == foodTrucks2.getID())
+            {
+                break;
+            }
+            index++;
+        }
+        FoodTrucks removedTrucks = foodTrucks.get(index);
+        foodTrucks.remove(foodTrucks.get(index));
+        return removedTrucks;
         
     }
 
     @PutMapping("/{ID}")
     public ResponseEntity updateTruckByID(@PathVariable Integer ID, @RequestBody FoodTrucks truck) {
-        FoodTrucks updateTrucks = foodTrucks.get(ID);
+        var index = 0;
+        for (FoodTrucks foodTrucks2 : foodTrucks) {
+            
+            if(ID == foodTrucks2.getID())
+            {
+                break;
+            }
+            index++;
+        }
+        FoodTrucks updateTrucks = foodTrucks.get(index);
         updateTrucks.setApplicant(truck.getApplicant());
         updateTrucks.setAddress(truck.getAddress());
         updateTrucks.setFoodItems(truck.getFoodItems());
@@ -78,8 +106,8 @@ public class FoodTruckController {
         return ResponseEntity.ok(updateTrucks);
     }
 
-    @PostMapping("/")
-    public ResponseEntity createTruck(@RequestBody FoodTrucks truck) {
+    @PostMapping("/create")
+    public String createTruck(@RequestBody FoodTrucks truck) {
         FoodTrucks updateTrucks = new FoodTrucks();
         updateTrucks.setID(count++);
         updateTrucks.setApplicant(truck.getApplicant());
@@ -87,7 +115,7 @@ public class FoodTruckController {
         updateTrucks.setFoodItems(truck.getFoodItems());
         foodTrucks.add(updateTrucks);
 
-        return ResponseEntity.ok(updateTrucks);
+        return "Success";
 
     }
 

@@ -1,60 +1,121 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/Button';
 import { Container, Form, FormGroup, Input, Label } from 'reactstrap';
-import AddBox from '@material-ui/icons/AddBox';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import Check from '@material-ui/icons/Check';
-import ChevronLeft from '@material-ui/icons/ChevronLeft';
-import ChevronRight from '@material-ui/icons/ChevronRight';
-import Clear from '@material-ui/icons/Clear';
-import DeleteOutline from '@material-ui/icons/DeleteOutline';
-import Edit from '@material-ui/icons/Edit';
-import FilterList from '@material-ui/icons/FilterList';
-import FirstPage from '@material-ui/icons/FirstPage';
-import LastPage from '@material-ui/icons/LastPage';
-import Remove from '@material-ui/icons/Remove';
-import SaveAlt from '@material-ui/icons/SaveAlt';
-import Search from '@material-ui/icons/Search';
-import ViewColumn from '@material-ui/icons/ViewColumn';
-import MaterialTable from "material-table";
-import Collapse from '@mui/material/Collapse';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import PropTypes from 'prop-types';
-import IconButton from '@mui/material/IconButton';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import 'sweetalert2/dist/sweetalert2.css';
 
 export class ViewAll extends Component {
     state = {
       trucks: []
     };
-  
-    async componentDidMount() {
-        const response = await fetch('/all');
-        const body = await response.json();
-        this.setState({trucks: body});
+    FoodTrucks = {
+      Applicant: 'test',
+      Address: 'test',
+      FoodItems: 'test'
+    };
+
+      componentDidMount() {
+        this.getTable();
+    } 
+
+      handleDelete(ID) {
+        fetch('/' + ID, {
+            method: 'DELETE',
+        }).then(res => res.json())
+            .then(
+                (result) => {
+                  this.getTable();
+                  if(result){
+                    Swal.fire ({
+                      title: result.applicant,
+                      html: "Has Been Deleted!",
+                      confirmButtonText: 'All Done!'
+                    })
+                  }
+                }
+            );
+         
     }
+
+    createTruck() {
+      Swal.fire({
+        title: 'New Food Truck',
+        html: `<input type="text" id="applicant" class="swal2-input" placeholder="applicant">
+        <input type="text" id="address" class="swal2-input" placeholder="address">,
+        <input type="text" id="fooditems" class="swal2-input" placeholder="fooditems">`,
+        
+        confirmButtonText: 'ADD',
+        preConfirm: () => {
+          const applicant = Swal.getPopup().querySelector('#applicant').value
+          const address = Swal.getPopup().querySelector('#address').value
+          const fooditems = Swal.getPopup().querySelector('#fooditems').value
+          if (!applicant || !address || !fooditems) {
+            Swal.showValidationMessage('Please all 3 vales')
+          }
+          return { applicant: applicant, address: address, fooditems: fooditems }
+        }
+      }).then((result) => {
+
+        var applicant = result.value.applicant
+        var address = result.value.address
+        var fooditems = result.value.fooditems
+
+      fetch('/create', {
+        
+      method: 'POST', 
+      headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      "applicant": applicant,
+      "address": address,
+      "foodItems": fooditems})
+    }) 
+    this.getTable();
+      })
+    
+  }
+
+    moreDetails(ID) {
+      fetch('/' + ID, {
+          method: 'GET',
+      }).then(res => res.json())
+          .then(
+              (result) => {   
+                  if(result){
+                    Swal.fire ({
+                      title: result.applicant,
+                      html: "Address </br></br>"+result.address+ "</br></br>" + "Menu </br></br>"+result.foodItems,
+                      confirmButtonText: 'This May be Nice!'
+                    })
+                  }        
+              }
+          );   
+  }
+
+    getTable() {
+
+      fetch('/all', {
+          method: 'GET',
+      }).then(res => res.json())
+          .then(
+              (res) => { 
+                this.setState({trucks: res})
+
+              },
+          );
+  }
+
   
     render() {
       const {trucks} = this.state;
+
       return (
           <div className="App">
             <header>
               <div className="App-intro">
-                <h1>Food Trucks in San Francisco</h1>
-    
+                <h1>Food Trucks in San Francisco <Button onClick={() => { this.createTruck() }} >ADD FOOD TRUCK</Button></h1>
+                  
                  <Container>
                 <Table stripped bordered hover>
                 <thead>
@@ -66,13 +127,12 @@ export class ViewAll extends Component {
                 </thead>
                 <tbody>
                   {trucks.map((trucks) => (
-                    <tr key={trucks.id}>                 
+                    <tr key={trucks.id}>             
                     <td>{trucks.applicant}</td>
-                    <td><Button>More Details</Button></td> 
-                    <td><ButtonGroup>
-                    <td><Button>Edit</Button></td>
-                    <td><Button>Delete</Button></td> 
-                    </ButtonGroup></td>       
+                    <td><Button onClick={() => { this.moreDetails(trucks.id) }} >More Details</Button></td> 
+                    <td><Button>Edit</Button>&nbsp;&nbsp;&nbsp;  
+                    <Button onClick={() => { this.handleDelete(trucks.id)}}>Delete</Button>
+                    </td>    
                     </tr>
                     ))}
                     </tbody>

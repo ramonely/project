@@ -13,7 +13,6 @@ public class FoodTrucks {
     private String Schedule;
     private String Location;
 
-    
 
     public Integer getID() {
         return ID;

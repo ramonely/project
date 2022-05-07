@@ -30,6 +30,8 @@
 
     "react-scripts": "5.0.1",
 
+    "sweetalert2": "^11.4.10",
+
     "web-vitals": "^2.1.4"
 
   },
