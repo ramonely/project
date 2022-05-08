@@ -6,7 +6,7 @@ You can click this button to see more details about each food truck
 
 <img width="377" alt="Screen Shot 2022-05-08 at 05 07 40" src="https://user-images.githubusercontent.com/17148816/167289623-18bf1afd-2e35-461a-af08-4f23a9c67756.png">
 
-It will then brin up a page like this
+It will then bring up a page like this
 
 <img width="610" alt="Screen Shot 2022-05-08 at 05 08 58" src="https://user-images.githubusercontent.com/17148816/167289643-2b9af947-79a9-4598-859a-b66989e8aa20.png">
 
@@ -14,7 +14,7 @@ If you want to add a new Food Truck click this button
 
 <img width="300" alt="Screen Shot 2022-05-08 at 05 08 18" src="https://user-images.githubusercontent.com/17148816/167289670-d2a38dc2-115c-4767-b55f-5a1c1389de78.png">
 
-it will bring up this page for you to add the three pieces of information needed
+It will bring up this page for you to add the three pieces of information needed
 
 <img width="610" alt="Screen Shot 2022-05-08 at 05 08 48" src="https://user-images.githubusercontent.com/17148816/167289690-823d89fd-2e1b-4a38-8761-c0b6d4232cad.png">
 
