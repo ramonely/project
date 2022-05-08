@@ -190,7 +190,7 @@ abcA() {
                 &nbsp;&nbsp;&nbsp;<Button variant="success" onClick={() => { this.createTruck() }} >ADD FOOD TRUCK</Button></h1>
                 <Button variant="link" size="sm" onClick={() => { this.abcA() }} > Sort by Address</Button>
                 <Button variant="link" size="sm" onClick={() => { this.abcN() }} >Sort by Name</Button> 
-                  
+
                  <Container>
                 <Table stripped bordered hover>
                 <thead>
