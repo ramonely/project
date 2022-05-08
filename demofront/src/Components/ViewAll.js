@@ -49,12 +49,56 @@ export class ViewAll extends Component {
   );  
 }
 
+updateTruck(ID) {
+  fetch('/' + ID, {
+    method: 'GET',
+}).then(res => res.json())
+    .then(
+        (result) => {   
+            if(result){
+              Swal.fire({
+                title: "Updating: "+result.applicant,
+                html: `Applicant: <input type="text" id="applicant" class="swal2-input" value="${result.applicant}" placeholder="${result.applicant}">
+                Address: <input type="text" id="address" class="swal2-input" value="${result.address}" placeholder="${result.address}">
+                Menu: <textarea rows="3" cols="19" type="text" id="fooditems" class="swal2-input" placeholder="${result.foodItems}">${result.foodItems}</textarea>`,
+                
+                confirmButtonText: 'Update',
+                preConfirm: () => {
+                  const applicant = Swal.getPopup().querySelector('#applicant').value
+                  const address = Swal.getPopup().querySelector('#address').value
+                  const fooditems = Swal.getPopup().querySelector('#fooditems').value
+
+                  return { applicant: applicant, address: address, fooditems: fooditems }
+                }
+              }).then((result) => {
+            
+                var applicant = result.value.applicant
+                var address = result.value.address
+                var fooditems = result.value.fooditems
+            
+              fetch('/' + ID, {
+                
+              method: 'PUT', 
+              headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              "applicant": applicant,
+              "address": address,
+              "foodItems": fooditems})
+            }) 
+            window.location.reload()
+              })
+            }        
+        }
+    );   
+
+}
+
     createTruck() {
       Swal.fire({
         title: 'New Food Truck',
-        html: `<input type="text" id="applicant" class="swal2-input" placeholder="applicant">
-        <input type="text" id="address" class="swal2-input" placeholder="address">,
-        <input type="text" id="fooditems" class="swal2-input" placeholder="fooditems">`,
+        html: `Applicant: <input type="text" id="applicant" class="swal2-input" placeholder="applicant">
+        Address: <input type="text" id="address" class="swal2-input" placeholder="address">,
+        Menu: <textarea rows="3" cols="19" type="text" id="fooditems" class="swal2-input" placeholder="fooditems"></textarea>`,
         
         confirmButtonText: 'ADD',
         preConfirm: () => {
@@ -137,7 +181,7 @@ export class ViewAll extends Component {
                     <tr key={trucks.id}>             
                     <td>{trucks.applicant}</td>
                     <td><Button onClick={() => { this.moreDetails(trucks.id) }} >More Details</Button></td> 
-                    <td><Button>Edit</Button>&nbsp;&nbsp;&nbsp;  
+                    <td><Button onClick={() => { this.updateTruck(trucks.id) }} >Edit</Button>&nbsp;&nbsp;&nbsp;  
                     <Button onClick={() => { this.handleDelete(trucks.id)}}>Delete</Button>
                     </td>    
                     </tr>
