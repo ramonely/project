@@ -22,6 +22,7 @@ public class FoodTruckController {
 
     List<FoodTrucks> foodTrucks = new ArrayList<FoodTrucks>();
     Integer count = 0;
+    Integer thisCount = -125;
 
     public FoodTruckController (){
 
@@ -109,11 +110,12 @@ public class FoodTruckController {
     @PostMapping("/create")
     public String createTruck(@RequestBody FoodTrucks truck) {
         FoodTrucks updateTrucks = new FoodTrucks();
-        updateTrucks.setID(count++);
+        updateTrucks.setID(thisCount);
         updateTrucks.setApplicant(truck.getApplicant());
         updateTrucks.setAddress(truck.getAddress());
         updateTrucks.setFoodItems(truck.getFoodItems());
-        foodTrucks.add(updateTrucks);
+        foodTrucks.add(0,updateTrucks);
+        ++thisCount;
 
         return "Success";
 

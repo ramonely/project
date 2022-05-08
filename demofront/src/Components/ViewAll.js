@@ -10,11 +10,6 @@ export class ViewAll extends Component {
     state = {
       trucks: []
     };
-    FoodTrucks = {
-      Applicant: 'test',
-      Address: 'test',
-      FoodItems: 'test'
-    };
 
       componentDidMount() {
         this.getTable();
@@ -35,9 +30,24 @@ export class ViewAll extends Component {
                     })
                   }
                 }
-            );
-         
+            ); 
     }
+
+    jokesIfYouDare() {
+      fetch('https://api.chucknorris.io/jokes/random', {   
+      method: 'GET', 
+    }).then(res => res.json())
+    .then(
+      (result) => {   
+          if(result){
+            Swal.fire ({
+              title: result.value,
+              confirmButtonText: 'That Was Not Too Bad!'
+            })
+          }        
+      }
+  );  
+}
 
     createTruck() {
       Swal.fire({
@@ -52,7 +62,7 @@ export class ViewAll extends Component {
           const address = Swal.getPopup().querySelector('#address').value
           const fooditems = Swal.getPopup().querySelector('#fooditems').value
           if (!applicant || !address || !fooditems) {
-            Swal.showValidationMessage('Please all 3 vales')
+            Swal.showValidationMessage('Please all 3 values')
           }
           return { applicant: applicant, address: address, fooditems: fooditems }
         }
@@ -71,9 +81,8 @@ export class ViewAll extends Component {
       "address": address,
       "foodItems": fooditems})
     }) 
-    this.getTable();
+    window.location.reload()
       })
-    
   }
 
     moreDetails(ID) {
@@ -94,18 +103,15 @@ export class ViewAll extends Component {
   }
 
     getTable() {
-
       fetch('/all', {
           method: 'GET',
       }).then(res => res.json())
           .then(
               (res) => { 
                 this.setState({trucks: res})
-
               },
           );
   }
-
   
     render() {
       const {trucks} = this.state;
@@ -114,7 +120,8 @@ export class ViewAll extends Component {
           <div className="App">
             <header>
               <div className="App-intro">
-                <h1>Food Trucks in San Francisco <Button onClick={() => { this.createTruck() }} >ADD FOOD TRUCK</Button></h1>
+                <h1><Button onClick={() => { this.jokesIfYouDare() }} >Click If You Dare</Button>&nbsp;&nbsp;&nbsp;Food Trucks in San Francisco 
+                &nbsp;&nbsp;&nbsp;<Button onClick={() => { this.createTruck() }} >ADD FOOD TRUCK</Button></h1>
                   
                  <Container>
                 <Table stripped bordered hover>
