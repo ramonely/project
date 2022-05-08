@@ -156,6 +156,28 @@ updateTruck(ID) {
               },
           );
   }
+
+  abcN() {
+    fetch('/abcN', {
+        method: 'GET',
+    }).then(res => res.json())
+        .then(
+            (res) => { 
+              this.setState({trucks: res})
+            },
+        );
+}
+
+abcA() {
+  fetch('/abcA', {
+      method: 'GET',
+  }).then(res => res.json())
+      .then(
+          (res) => { 
+            this.setState({trucks: res})
+          },
+      );
+}
   
     render() {
       const {trucks} = this.state;
@@ -165,14 +187,16 @@ updateTruck(ID) {
             <header>
               <div className="App-intro">
                 <h1><Button onClick={() => { this.jokesIfYouDare() }} >Click If You Dare</Button>&nbsp;&nbsp;&nbsp;Food Trucks in San Francisco 
-                &nbsp;&nbsp;&nbsp;<Button onClick={() => { this.createTruck() }} >ADD FOOD TRUCK</Button></h1>
+                &nbsp;&nbsp;&nbsp;<Button variant="success" onClick={() => { this.createTruck() }} >ADD FOOD TRUCK</Button></h1>
+                <Button variant="link" size="sm" onClick={() => { this.abcA() }} > Sort by Address</Button>
+                <Button variant="link" size="sm" onClick={() => { this.abcN() }} >Sort by Name</Button> 
                   
                  <Container>
                 <Table stripped bordered hover>
                 <thead>
                     <tr>
-                        <th width="30%">Name</th>
-                        <th width="40%">Info</th>
+                        <th width="30%">Name </th>
+                        <th width="40%"> Info </th>
                         <th width="40%">Actions</th>
                     </tr>
                 </thead>
@@ -180,9 +204,9 @@ updateTruck(ID) {
                   {trucks.map((trucks) => (
                     <tr key={trucks.id}>             
                     <td>{trucks.applicant}</td>
-                    <td><Button onClick={() => { this.moreDetails(trucks.id) }} >More Details</Button></td> 
-                    <td><Button onClick={() => { this.updateTruck(trucks.id) }} >Edit</Button>&nbsp;&nbsp;&nbsp;  
-                    <Button onClick={() => { this.handleDelete(trucks.id)}}>Delete</Button>
+                    <td><Button variant="info" onClick={() => { this.moreDetails(trucks.id) }} >More Details</Button></td> 
+                    <td><Button variant="warning" onClick={() => { this.updateTruck(trucks.id) }} >Edit</Button>&nbsp;&nbsp;&nbsp;  
+                    <Button variant="danger" onClick={() => { this.handleDelete(trucks.id)}}>Delete</Button>
                     </td>    
                     </tr>
                     ))}

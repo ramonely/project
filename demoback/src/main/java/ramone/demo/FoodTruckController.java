@@ -51,6 +51,15 @@ public class FoodTruckController {
             e.printStackTrace();
         }
     }
+    @RequestMapping("/abcA")
+    public List<FoodTrucks> abcATrucks(){
+        return foodTrucks.stream().sorted((object1, object2) -> object1.getAddress().compareTo(object2.getAddress())).toList();
+    }
+
+    @RequestMapping("/abcN")
+    public List<FoodTrucks> abcNTrucks(){
+        return foodTrucks.stream().sorted((object1, object2) -> object1.getApplicant().compareTo(object2.getApplicant())).toList();
+    }
 
     @RequestMapping("/all")
     public List<FoodTrucks> allTrucks(){
