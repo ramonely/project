@@ -1,3 +1,16 @@
+For install just download the project locally and open it in VS Code,
+run "npm install -f" on front end folder and then "npm start"
+for back end just run "mvn spring-boot:run"
+
+API Stats to get all data 
+Time:
+9 ms
+Size:
+313.79 kb
+
+Over all smooth and simple with a use of CSVReader to read local csv file and map to a object for the backend data
+Then just API calls to interact with the data on the frontend using React
+
 This is how the application looks for all the food trucks in San Fran
 
 <img width="1128" alt="Screen Shot 2022-05-08 at 05 08 35" src="https://user-images.githubusercontent.com/17148816/167289597-a99d2971-615f-40b6-94bb-68267171545a.png">
@@ -34,10 +47,12 @@ If you are feeling brave you can click this button
 
 <img width="377" alt="Screen Shot 2022-05-08 at 05 07 25" src="https://user-images.githubusercontent.com/17148816/167289758-08c0ee58-ebe7-4121-8dd3-ac5e34d2c379.png">
 
-Which will tell you a random chuck norris joke each time 
+Which will tell you a random Chuck Norris joke each time 
 
 <img width="610" alt="Screen Shot 2022-05-08 at 05 09 06" src="https://user-images.githubusercontent.com/17148816/167289766-5112c66c-5192-44e5-8f9d-738e6c5d8002.png">
 
 These two buttons above info sort the table by Name (ABC) or Address (123thenABC)
 
 <img width="377" alt="Screen Shot 2022-05-08 at 05 07 53" src="https://user-images.githubusercontent.com/17148816/167289786-a4a2ebb8-2657-4c5d-a465-8dbcd0c460fd.png">
+
+Thanks for reading
