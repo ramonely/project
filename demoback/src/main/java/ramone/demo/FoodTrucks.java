@@ -2,7 +2,7 @@ package ramone.demo;
 
 public class FoodTrucks {
     
-    private Integer ID;
+    private int ID;
     private String Applicant;
     private String LocationDescription;
     private String Address;
@@ -14,12 +14,12 @@ public class FoodTrucks {
     private String Location;
 
 
-    public Integer getID() {
+    public int getID() {
         return ID;
     }
 
 
-    public void setID(Integer iD) {
+    public void setID(int iD) {
         ID = iD;
     }
 

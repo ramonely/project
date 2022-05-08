@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FoodTruckController {
 
     List<FoodTrucks> foodTrucks = new ArrayList<FoodTrucks>();
-    Integer count = 0;
-    Integer thisCount = -125;
+    int count = 0;
 
     public FoodTruckController (){
 
@@ -67,30 +66,14 @@ public class FoodTruckController {
     }
 
     @RequestMapping("/{ID}")
-    public FoodTrucks getTruckByID(@PathVariable Integer ID){
-        var index = 0;
-        for (FoodTrucks foodTrucks2 : foodTrucks) {
-            
-            if(ID == foodTrucks2.getID())
-            {
-                break;
-            }
-            index++;
-        }
+    public FoodTrucks getTruckByID(@PathVariable int ID){
+        int index = byID(ID);
         return foodTrucks.get(index);
     }
 
     @DeleteMapping("/{ID}")
-    public FoodTrucks deleteTruckByID(@PathVariable Integer ID) {
-        var index = 0;
-        for (FoodTrucks foodTrucks2 : foodTrucks) {
-            
-            if(ID == foodTrucks2.getID())
-            {
-                break;
-            }
-            index++;
-        }
+    public FoodTrucks deleteTruckByID(@PathVariable int ID) {
+        int index = byID(ID);
         FoodTrucks removedTrucks = foodTrucks.get(index);
         foodTrucks.remove(foodTrucks.get(index));
         return removedTrucks;
@@ -98,16 +81,8 @@ public class FoodTruckController {
     }
 
     @PutMapping("/{ID}")
-    public ResponseEntity updateTruckByID(@PathVariable Integer ID, @RequestBody FoodTrucks truck) {
-        var index = 0;
-        for (FoodTrucks foodTrucks2 : foodTrucks) {
-            
-            if(ID == foodTrucks2.getID())
-            {
-                break;
-            }
-            index++;
-        }
+    public ResponseEntity updateTruckByID(@PathVariable int ID, @RequestBody FoodTrucks truck) {
+        int index = byID(ID);
         FoodTrucks updateTrucks = foodTrucks.get(index);
         updateTrucks.setApplicant(truck.getApplicant());
         updateTrucks.setAddress(truck.getAddress());
@@ -119,14 +94,28 @@ public class FoodTruckController {
     @PostMapping("/create")
     public String createTruck(@RequestBody FoodTrucks truck) {
         FoodTrucks updateTrucks = new FoodTrucks();
-        updateTrucks.setID(thisCount);
+        updateTrucks.setID(count);
         updateTrucks.setApplicant(truck.getApplicant());
         updateTrucks.setAddress(truck.getAddress());
         updateTrucks.setFoodItems(truck.getFoodItems());
         foodTrucks.add(0,updateTrucks);
-        ++thisCount;
+        ++count;
 
         return "Success";
+
+    }
+
+    private int byID(int ID){
+        int index = 0;
+        for (FoodTrucks foodTrucks2 : foodTrucks) {
+            
+            if(ID == foodTrucks2.getID())
+            {
+                break;
+            }
+            index++;
+        }
+        return index;
 
     }
 
